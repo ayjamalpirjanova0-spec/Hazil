@@ -1,152 +1,175 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <title>Prezentatsiya</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Prezentatsiya</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Segoe UI", sans-serif;
-        }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI",sans-serif;
+}
 
-        body {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+body{
+    background:#000;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
 
-        .slider {
-            width: 90%;
-            max-width: 1000px;
-            height: 80vh;
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-            background: #000;
-        }
+/* 16:9 monitor format */
+.slider{
+    width:90vw;
+    height:50.6vw;
+    max-width:1280px;
+    max-height:720px;
+    position:relative;
+    overflow:hidden;
+    border-radius:18px;
+    box-shadow:0 25px 60px rgba(0,0,0,0.6);
+}
 
-        .slide {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transform: scale(1.05);
-            transition: opacity 1s ease, transform 1s ease;
-        }
+/* Slide */
+.slide{
+    position:absolute;
+    width:100%;
+    height:100%;
+    opacity:0;
+    transition:opacity 1s ease;
+}
 
-        .slide.active {
-            opacity: 1;
-            transform: scale(1);
-            z-index: 1;
-        }
+.slide.active{
+    opacity:1;
+    z-index:1;
+}
 
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+/* BLUR FON */
+.slide::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:var(--bg);
+    background-size:cover;
+    background-position:center;
+    filter:blur(25px) brightness(0.5);
+    transform:scale(1.1);
+}
 
-        /* Buttons */
-        .controls {
-            position: absolute;
-            width: 100%;
-            bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 40px;
-            z-index: 2;
-        }
+/* ASOSIY RASM */
+.slide img{
+    position:relative;
+    z-index:2;
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    animation:zoomIn 1.2s ease;
+}
 
-        .btn {
-            padding: 12px 28px;
-            border-radius: 50px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            color: #fff;
-            background: linear-gradient(135deg, #ff512f, #dd2476);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-            transition: all 0.3s ease;
-        }
+/* Animatsiya */
+@keyframes zoomIn{
+    from{transform:scale(0.95);opacity:0}
+    to{transform:scale(1);opacity:1}
+}
 
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-            opacity: 0.9;
-        }
+/* Counter */
+.counter{
+    position:absolute;
+    top:20px;
+    right:25px;
+    background:rgba(0,0,0,0.5);
+    color:#fff;
+    padding:8px 16px;
+    border-radius:20px;
+    z-index:5;
+    backdrop-filter:blur(10px);
+}
 
-        .counter {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: #fff;
-            font-size: 18px;
-            background: rgba(0,0,0,0.4);
-            padding: 8px 16px;
-            border-radius: 20px;
-            z-index: 2;
-            backdrop-filter: blur(10px);
-        }
-    </style>
+/* Buttons */
+.controls{
+    position:absolute;
+    bottom:25px;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    padding:0 40px;
+    z-index:5;
+}
+
+.btn{
+    padding:12px 30px;
+    border:none;
+    border-radius:50px;
+    font-size:16px;
+    font-weight:600;
+    color:#fff;
+    cursor:pointer;
+    background:linear-gradient(135deg,#ff512f,#dd2476);
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 15px 40px rgba(0,0,0,0.7);
+}
+</style>
 </head>
+
 <body>
 
 <div class="slider">
     <div class="counter" id="counter">1 / 11</div>
 
-    <!-- Slides -->
-    <div class="slide active"><img src="img1.jpg"></div>
-    <div class="slide"><img src="img2.jpg"></div>
-    <div class="slide"><img src="img3.jpg"></div>
-    <div class="slide"><img src="img4.jpg"></div>
-    <div class="slide"><img src="img5.jpg"></div>
-    <div class="slide"><img src="img6.jpg"></div>
-    <div class="slide"><img src="img7.jpg"></div>
-    <div class="slide"><img src="img8.jpg"></div>
-    <div class="slide"><img src="img9.jpg"></div>
-    <div class="slide"><img src="img10.jpg"></div>
-    <div class="slide"><img src="img11.jpg"></div>
+    <div class="slide active" style="--bg:url('img1.jpg')"><img src="img1.jpg"></div>
+    <div class="slide" style="--bg:url('img2.jpg')"><img src="img2.jpg"></div>
+    <div class="slide" style="--bg:url('img3.jpg')"><img src="img3.jpg"></div>
+    <div class="slide" style="--bg:url('img4.jpg')"><img src="img4.jpg"></div>
+    <div class="slide" style="--bg:url('img5.jpg')"><img src="img5.jpg"></div>
+    <div class="slide" style="--bg:url('img6.jpg')"><img src="img6.jpg"></div>
+    <div class="slide" style="--bg:url('img7.jpg')"><img src="img7.jpg"></div>
+    <div class="slide" style="--bg:url('img8.jpg')"><img src="img8.jpg"></div>
+    <div class="slide" style="--bg:url('img9.jpg')"><img src="img9.jpg"></div>
+    <div class="slide" style="--bg:url('img10.jpg')"><img src="img10.jpg"></div>
+    <div class="slide" style="--bg:url('img11.jpg')"><img src="img11.jpg"></div>
 
-    <!-- Controls -->
     <div class="controls">
-        <button class="btn" onclick="prevSlide()">⬅ Oldingi</button>
-        <button class="btn" onclick="nextSlide()">Keyingi ➡</button>
+        <button class="btn" onclick="prevSlide();stopAuto()">⬅ Oldingi</button>
+        <button class="btn" onclick="nextSlide();stopAuto()">Keyingi ➡</button>
     </div>
 </div>
 
 <script>
-    const slides = document.querySelectorAll('.slide');
-    const counter = document.getElementById('counter');
-    let index = 0;
-    const total = slides.length;
+const slides=document.querySelectorAll('.slide');
+const counter=document.getElementById('counter');
+let index=0;
+const total=slides.length;
 
-    function showSlide(i) {
-        slides.forEach(slide => slide.classList.remove('active'));
-        slides[i].classList.add('active');
-        counter.textContent = `${i + 1} / ${total}`;
-    }
+let auto=setInterval(nextSlide,12000);
 
-    function nextSlide() {
-        index = (index + 1) % total;
-        showSlide(index);
-    }
+function showSlide(i){
+    slides.forEach(s=>s.classList.remove('active'));
+    slides[i].classList.add('active');
+    counter.textContent=`${i+1} / ${total}`;
+}
 
-    function prevSlide() {
-        index = (index - 1 + total) % total;
-        showSlide(index);
-    }
+function nextSlide(){
+    index=(index+1)%total;
+    showSlide(index);
+}
 
-    // Auto slide (ixtiyoriy)
-    setInterval(nextSlide, 60000);
+function prevSlide(){
+    index=(index-1+total)%total;
+    showSlide(index);
+}
+
+function stopAuto(){
+    clearInterval(auto);
+}
 </script>
 
 </body>
